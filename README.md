@@ -1,4 +1,6 @@
-# QQ音乐API接口
+# qq-music-api
+
+QQ音乐API接口
 
 ## License
 
