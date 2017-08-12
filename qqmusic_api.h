@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QJsonObject>
+#include <QMap>
 
 class QNetworkAccessManager;
 class QNetoworkRequest;
@@ -12,13 +13,14 @@ class QUrl;
 class QQMusicAPI : public QObject
 {
     Q_OBJECT
+    
 
 public:
     QQMusicAPI(QObject *parent = 0);
 
 private:
     QNetworkAccessManager *http;
-
+    QMap<QString, QString> map;
 };
 
 #endif
