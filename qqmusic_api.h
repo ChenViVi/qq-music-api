@@ -30,7 +30,7 @@ private:
     QString key;
 
 signals:
-    void searchList(QString);
+    void searchList(QString, QString);
 };
 
 #endif

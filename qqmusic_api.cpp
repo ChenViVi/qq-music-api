@@ -61,7 +61,7 @@ void QQMusicAPI::searchFinished()
             qDebug() << QString("%1 - %2  %3").arg(song_name).arg(singer_name).arg(song_mid);
             qDebug() << "\n";
 
-            emit searchList(song_name + " - " + singer_name);
+            emit searchList(song_name + " - " + singer_name, "http://dl.stream.qqmusic.qq.com/M500" + song_mid + ".mp3?vkey=" + key +"&guid=85880580&fromtag=30");
         }
 
     }
