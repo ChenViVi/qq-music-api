@@ -9,6 +9,10 @@ class Widget : public QWidget
 
 public:
     Widget(QWidget *parent = 0);
+
+private:
+    QStringList names;
+    QStringList urls;
 };
 
 #endif // WIDGET_H

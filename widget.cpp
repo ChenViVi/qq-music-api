@@ -1,4 +1,5 @@
 #include "widget.h"
+#include <QDebug>
 #include <QWidget>
 #include <QVBoxLayout>
 #include <QPushButton>
@@ -24,15 +25,24 @@ Widget::Widget(QWidget *parent)
     layout->addWidget(list);
 
     QObject::connect(api, &QQMusicAPI::searchList, this, [=](QString text, QString url){
+        names << text;
+        urls << url;
+
         new QListWidgetItem(text + "\n" + url, list);
     });
 
     QObject::connect(btn, &QPushButton::clicked, this, [=]{
         api->search(edit->text(), 1);
+
         list->clear();
+        names.clear();
+        urls.clear();
     });
 
     QObject::connect(list, &QListWidget::currentRowChanged, this, [=](int current){
+        mediaplay->setMedia(QUrl(urls.at(current)));
+        mediaplay->play();
 
+        qDebug() << urls.at(current);
     });
 }
