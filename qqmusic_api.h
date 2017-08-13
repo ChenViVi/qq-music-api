@@ -18,7 +18,8 @@ public:
     QQMusicAPI(QObject *parent = 0);
 
     void search(const QString &keyword, const int page);
-    QString getKey();
+    void getKey();
+    QString getSongUrl(const QString &song_mid);
 
 private slots:
     void searchFinished();

@@ -23,15 +23,20 @@ void QQMusicAPI::search(const QString &keyword, const int page)
     connect(reply, &QNetworkReply::finished, this, &QQMusicAPI::searchFinished);
 }
 
-QString QQMusicAPI::getKey()
+void QQMusicAPI::getKey()
 {
-    QUrl url = QString("https://c.y.qq.com/base/fcgi-bin/fcg_musicexpress.fcg?json=3&format=json&guid=1000008952");
+    QUrl url = QString("https://c.y.qq.com/base/fcgi-bin/fcg_musicexpress.fcg?json=3&format=json&guid=85880580");
     QNetworkRequest request(url);
     QNetworkReply *reply = http->get(request);
-    //http->get(request);
 
-    //connect(http, &QNetworkAccessManager::finished, this, &QQMusicAPI::getKeyFinished);
-    //connect(reply, &QNetworkReply::finished, this, &QQMusicAPI::getKeyFinished);
+    connect(reply, &QNetworkReply::finished, this, &QQMusicAPI::getKeyFinished);
+}
+
+QString QQMusicAPI::getSongUrl(const QString &song_mid)
+{
+    getKey();
+
+    return "http://dl.stream.qqmusic.qq.com/M500" + song_mid + ".mp3?vkey=" + key + "&guid=85880580&fromtag=30";
 }
 
 void QQMusicAPI::searchFinished()
@@ -50,6 +55,8 @@ void QQMusicAPI::searchFinished()
             QString singer_name = list.at(i).toObject().value("singer").toArray().at(0).toObject().value("name").toString();
             QString song_mid = list.at(i).toObject().value("songmid").toString();
 
+
+            //qDebug() << "http://dl.stream.qqmusic.qq.com/M500" + song_mid + ".mp3?vkey=" + key +"&guid=85880580&fromtag=30";
             qDebug() << QString("%1 - %2  %3").arg(song_name).arg(singer_name).arg(song_mid);
         }
 
@@ -59,7 +66,7 @@ void QQMusicAPI::searchFinished()
 void QQMusicAPI::getKeyFinished()
 {
     QNetworkReply *reply = qobject_cast<QNetworkReply*>(sender());
-    /*
+
     if (!reply->error()) {
         QByteArray array = reply->readAll();
         QJsonDocument document = QJsonDocument::fromJson(array);
@@ -67,7 +74,7 @@ void QQMusicAPI::getKeyFinished()
 
         key = object.value("key").toString();
 
-        //qDebug() << key;
+        qDebug() << "我草 " << key;
     }
-    */
+
 }
