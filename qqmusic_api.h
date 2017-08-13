@@ -18,12 +18,15 @@ public:
     QQMusicAPI(QObject *parent = 0);
 
     void search(const QString &keyword, const int page);
+    QString getKey();
 
 private slots:
-    void searchFinished(QNetworkReply *reply);
+    void searchFinished();
+    void getKeyFinished();
     
 private:
     QNetworkAccessManager *http;
+    QString key;
 };
 
 #endif

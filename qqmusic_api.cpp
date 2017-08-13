@@ -16,14 +16,58 @@ QQMusicAPI::QQMusicAPI(QObject *parent)
 
 void QQMusicAPI::search(const QString &keyword, const int page)
 {
-    QNetworkRequest request;
-    request.setUrl(QUrl("http://c.y.qq.com/soso/fcgi-bin/client_search_cp?t=0&aggr=1&lossless=1&cr=1&catZhida=1&format=json&p=1&n=2&w=wss"));
-    http->get(request);
+    QUrl url = QString("http://c.y.qq.com/soso/fcgi-bin/client_search_cp?t=0&aggr=1&lossless=1&cr=1&catZhida=1&format=json&p=" + QString::number(page) + "&n=20&w=" + keyword);
+    QNetworkRequest request(url);
+    QNetworkReply *reply = http->get(request);
 
-    connect(http, SIGNAL(finished(QNetworkReply *)), this, SLOT(searchFinished(QNetworkReply *)));
+    connect(reply, &QNetworkReply::finished, this, &QQMusicAPI::searchFinished);
 }
 
-void QQMusicAPI::searchFinished(QNetworkReply *reply)
+QString QQMusicAPI::getKey()
 {
-    qDebug() << reply->readAll();
+    QUrl url = QString("https://c.y.qq.com/base/fcgi-bin/fcg_musicexpress.fcg?json=3&format=json&guid=1000008952");
+    QNetworkRequest request(url);
+    QNetworkReply *reply = http->get(request);
+    //http->get(request);
+
+    //connect(http, &QNetworkAccessManager::finished, this, &QQMusicAPI::getKeyFinished);
+    //connect(reply, &QNetworkReply::finished, this, &QQMusicAPI::getKeyFinished);
+}
+
+void QQMusicAPI::searchFinished()
+{
+    QNetworkReply *reply = qobject_cast<QNetworkReply*>(sender());
+
+    if (!reply->error()) {
+        QByteArray array = reply->readAll();
+        QJsonDocument document = QJsonDocument::fromJson(array);
+        QJsonObject object = document.object();
+        QJsonObject song = object.value("data").toObject().value("song").toObject();
+        QJsonArray list = song["list"].toArray();
+
+        for (int i=0; i<list.size(); ++i) {
+            QString song_name = list.at(i).toObject().value("songname").toString();
+            QString singer_name = list.at(i).toObject().value("singer").toArray().at(0).toObject().value("name").toString();
+            QString song_mid = list.at(i).toObject().value("songmid").toString();
+
+            qDebug() << QString("%1 - %2  %3").arg(song_name).arg(singer_name).arg(song_mid);
+        }
+
+    }
+}
+
+void QQMusicAPI::getKeyFinished()
+{
+    QNetworkReply *reply = qobject_cast<QNetworkReply*>(sender());
+    /*
+    if (!reply->error()) {
+        QByteArray array = reply->readAll();
+        QJsonDocument document = QJsonDocument::fromJson(array);
+        QJsonObject object = document.object();
+
+        key = object.value("key").toString();
+
+        //qDebug() << key;
+    }
+    */
 }
