@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
 
     QWidget widget;
-    widget.resize(600, 400);
+    widget.resize(800, 600);
     QQMusicAPI *api = new QQMusicAPI(&widget);
 
     QListWidget *list = new QListWidget();

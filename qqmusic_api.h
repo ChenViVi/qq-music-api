@@ -39,7 +39,7 @@ class QQMusicAPI : public QObject
 public:
     QQMusicAPI(QObject *parent = 0);
 
-    void search(const QString &keyword, const int page);
+    void search(const QString &keyword, const int &page);
     void getKey();
     QString getSongUrl(const QString &song_mid);
 

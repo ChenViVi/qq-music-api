@@ -36,7 +36,7 @@ QQMusicAPI::QQMusicAPI(QObject *parent)
     http = new QNetworkAccessManager(this);
 }
 
-void QQMusicAPI::search(const QString &keyword, const int page)
+void QQMusicAPI::search(const QString &keyword, const int &page)
 {
     QUrl url = QString("http://c.y.qq.com/soso/fcgi-bin/client_search_cp?t=0&aggr=1&lossless=1&cr=1&catZhida=1&format=json&p=" + QString::number(page) + "&n=20&w=" + keyword);
     QNetworkRequest request(url);
