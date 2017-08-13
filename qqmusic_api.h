@@ -28,6 +28,9 @@ private slots:
 private:
     QNetworkAccessManager *http;
     QString key;
+
+signals:
+    void searchList(QString);
 };
 
 #endif
