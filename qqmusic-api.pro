@@ -9,5 +9,7 @@ TARGET = qqmusic-api
 INCLUDEPATH += .
 
 # Input
-HEADERS += qqmusic_api.h
-SOURCES += main.cpp qqmusic_api.cpp
+HEADERS += qqmusic_api.h \
+    widget.h
+SOURCES += main.cpp qqmusic_api.cpp \
+    widget.cpp
