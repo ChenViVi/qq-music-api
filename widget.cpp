@@ -28,7 +28,7 @@ Widget::Widget(QWidget *parent)
         names << text;
         urls << url;
 
-        new QListWidgetItem(text + "\n" + url, list);
+        new QListWidgetItem(text, list);
     });
 
     QObject::connect(btn, &QPushButton::clicked, this, [=]{
