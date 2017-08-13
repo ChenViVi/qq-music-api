@@ -6,7 +6,7 @@
 #include <QMap>
 
 class QNetworkAccessManager;
-class QNetoworkRequest;
+class QNetworkRequest;
 class QNetworkReply;
 class QUrl;
 
@@ -14,13 +14,16 @@ class QQMusicAPI : public QObject
 {
     Q_OBJECT
     
-
 public:
     QQMusicAPI(QObject *parent = 0);
 
+    void search(const QString &keyword, const int page);
+
+private slots:
+    void searchFinished(QNetworkReply *reply);
+    
 private:
     QNetworkAccessManager *http;
-    QMap<QString, QString> map;
 };
 
 #endif

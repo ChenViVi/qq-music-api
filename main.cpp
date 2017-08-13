@@ -1,11 +1,17 @@
 #include <QDebug>
 #include <QApplication>
+#include <QWidget>
 #include "qqmusic_api.h"
 
-int main(void)
+int main(int argc, char *argv[])
 {
-    QQMusicAPI *api = new QQMusicAPI();
-    
+    QApplication app(argc, argv);
 
-    return 0;
+    QWidget widget;
+    QQMusicAPI *api = new QQMusicAPI(&widget);
+    api->search("李白", 1);
+
+    widget.show();
+
+    return app.exec();
 }

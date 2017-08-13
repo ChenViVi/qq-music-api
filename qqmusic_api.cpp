@@ -11,11 +11,19 @@
 QQMusicAPI::QQMusicAPI(QObject *parent)
         : QObject(parent)
 {
-    map["Accept"] = "*/*";
-    map["Accept-Language"] = "zh-CN,zh;q=0.8,gl;q=0.6,zh-TW;q=0.4";
-    map["Connection"] = "keep-alive";
-    map["Content-Type"] = "application/x-www-form-urlencoded";
-    map["Host"] = "y.qq.com";
-    map["Referer"] = "http://y.qq.com/portal/player.html";
-    map["User-Agent"] = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.152 Safari/537.36";
+    http = new QNetworkAccessManager(this);
+}
+
+void QQMusicAPI::search(const QString &keyword, const int page)
+{
+    QNetworkRequest request;
+    request.setUrl(QUrl("http://c.y.qq.com/soso/fcgi-bin/client_search_cp?t=0&aggr=1&lossless=1&cr=1&catZhida=1&format=json&p=1&n=2&w=wss"));
+    http->get(request);
+
+    connect(http, SIGNAL(finished(QNetworkReply *)), this, SLOT(searchFinished(QNetworkReply *)));
+}
+
+void QQMusicAPI::searchFinished(QNetworkReply *reply)
+{
+    qDebug() << reply->readAll();
 }
