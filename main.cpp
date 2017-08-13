@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
     layout->addWidget(list);
 
     QObject::connect(api, &QQMusicAPI::searchList, &widget, [&](QString text, QString url){
-        new QListWidgetItem(text, list);
+        new QListWidgetItem(text + "\n" + url, list);
     });
 
     QObject::connect(btn, &QPushButton::clicked, &widget, [=]{

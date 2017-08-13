@@ -25,7 +25,6 @@
 #include <QNetworkReply>
 #include <QNetworkAccessManager>
 #include <QUrl>
-#include <QUrlQuery>
 #include <QJsonDocument>
 #include <QJsonArray>
 #include <QDebug>

@@ -25,7 +25,6 @@
 
 #include <QObject>
 #include <QJsonObject>
-#include <QMap>
 
 class QNetworkAccessManager;
 class QNetworkRequest;
