@@ -10,6 +10,7 @@ INCLUDEPATH += .
 
 # Input
 HEADERS += qqmusic_api.h \
-    widget.h
+    widget.h \
+    imageview.h
 SOURCES += main.cpp qqmusic_api.cpp \
-    widget.cpp
+    widget.cpp imageview.cpp

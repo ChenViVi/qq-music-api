@@ -94,12 +94,18 @@ void QQMusicAPI::searchFinished()
             QString song_name = list.at(i).toObject().value("songname").toString();
             QString singer_name = list.at(i).toObject().value("singer").toArray().at(0).toObject().value("name").toString();
             QString song_mid = list.at(i).toObject().value("songmid").toString();
+            QString album_mid = list.at(i).toObject().value("albummid").toString();
+            QString album_cover = QString("https://y.gtimg.cn/music/photo_new/T002R300x300M000%1.jpg").arg(album_mid);
+            QString album_cover_big = QString("https://y.gtimg.cn/music/photo_new/T002R500x500M000%1.jpg").arg(album_mid);
+            QString album_cover_small = QString("https://y.gtimg.cn/music/photo_new/T002R150x150M000%1.jpg").arg(album_mid);
 
             qDebug() << "http://dl.stream.qqmusic.qq.com/M500" + song_mid + ".mp3?vkey=" + key +"&guid=85880580&fromtag=30";
             qDebug() << QString("%1 - %2  %3").arg(song_name).arg(singer_name).arg(song_mid);
+             qDebug() << "album_cover: " << album_cover_small;
             qDebug() << "\n";
 
-            emit searchList(song_name + " - " + singer_name, "http://dl.stream.qqmusic.qq.com/M500" + song_mid + ".mp3?vkey=" + key +"&guid=85880580&fromtag=30");
+            emit searchList(song_name + " - " + singer_name, "http://dl.stream.qqmusic.qq.com/M500" + song_mid + ".mp3?vkey=" + key +"&guid=85880580&fromtag=30", album_cover_small);
+
         }
 
     }

@@ -28,9 +28,11 @@
 #include <QLineEdit>
 #include <QListWidget>
 #include <QListWidgetItem>
+#include <QLabel>
 #include <QMediaPlayer>
 #include <QStringList>
 #include "qqmusic_api.h"
+#include "imageview.h"
 
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
@@ -41,27 +43,31 @@ Widget::Widget(QWidget *parent)
     QPushButton *btn = new QPushButton("搜索歌曲");
     QLineEdit *edit = new QLineEdit();
     QMediaPlayer *mediaplay = new QMediaPlayer();
+    ImageView *imageView = new ImageView();
+    QLabel *label = new QLabel();
+
+    imageView->setFixedSize(50, 50);
 
     layout->addWidget(edit);
     layout->addWidget(btn);
     layout->addWidget(list);
+    layout->addWidget(label);
 
-    QObject::connect(api, &QQMusicAPI::searchList, this, [=](QString text, QString url){
+    QObject::connect(api, &QQMusicAPI::searchList, this, [=](QString text, QString url, QString image_url){
         names << text;
         urls << url;
+        imageUrls << image_url;
 
         new QListWidgetItem(text, list);
     });
 
     QObject::connect(btn, &QPushButton::clicked, this, [=]{
         api->search(edit->text(), 1);
-
-        list->clear();
-        names.clear();
-        urls.clear();
     });
 
     QObject::connect(list, &QListWidget::currentRowChanged, this, [=](int current){
+        imageView->setUrl(imageUrls.at(current));
+        label->setPixmap(imageView->getSucceedPixmap());
         mediaplay->setMedia(QUrl(urls.at(current)));
         mediaplay->play();
 

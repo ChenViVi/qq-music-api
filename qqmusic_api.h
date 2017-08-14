@@ -51,7 +51,7 @@ private:
     QString key;
 
 signals:
-    void searchList(QString, QString);
+    void searchList(QString, QString, QString);
 };
 
 #endif

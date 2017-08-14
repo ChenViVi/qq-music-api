@@ -35,6 +35,7 @@ public:
 private:
     QStringList names;
     QStringList urls;
+    QStringList imageUrls;
 };
 
 #endif // WIDGET_H
