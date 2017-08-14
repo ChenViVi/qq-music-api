@@ -25,6 +25,7 @@
 #include <QNetworkReply>
 #include <QNetworkAccessManager>
 #include <QUrl>
+#include <QUrlQuery>
 #include <QJsonDocument>
 #include <QJsonArray>
 #include <QDebug>
@@ -39,7 +40,19 @@ QQMusicAPI::QQMusicAPI(QObject *parent)
 
 void QQMusicAPI::search(const QString &keyword, const int &page)
 {
-    QUrl url = QString("http://c.y.qq.com/soso/fcgi-bin/client_search_cp?t=0&aggr=1&lossless=1&cr=1&catZhida=1&format=json&p=" + QString::number(page) + "&n=20&w=" + keyword);
+    QUrl url = QString("http://c.y.qq.com/soso/fcgi-bin/client_search_cp");
+    QUrlQuery query;
+    query.addQueryItem("t", "0");
+    query.addQueryItem("aggr", "1");
+    query.addQueryItem("lossless", "1");
+    query.addQueryItem("cr", "1");
+    query.addQueryItem("catZhida", "1");
+    query.addQueryItem("format", "json");
+    query.addQueryItem("p", QString::number(page));
+    query.addQueryItem("n", "20");
+    query.addQueryItem("w", keyword);
+    url.setQuery(query.toString(QUrl::FullyEncoded));
+
     QNetworkRequest request(url);
     QNetworkReply *reply = http->get(request);
 
@@ -48,7 +61,13 @@ void QQMusicAPI::search(const QString &keyword, const int &page)
 
 void QQMusicAPI::getKey()
 {
-    QUrl url = QString("https://c.y.qq.com/base/fcgi-bin/fcg_musicexpress.fcg?json=3&format=json&guid=85880580");
+    QUrl url = QString("https://c.y.qq.com/base/fcgi-bin/fcg_musicexpress.fcg");
+    QUrlQuery query;
+    query.addQueryItem("json", "3");
+    query.addQueryItem("format", "json");
+    query.addQueryItem("guid", "85880580");
+    url.setQuery(query.toString(QUrl::FullyEncoded));
+
     QNetworkRequest request(url);
     QNetworkReply *reply = http->get(request);
 
